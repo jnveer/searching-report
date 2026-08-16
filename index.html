@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Advocate Document Hub</title>
+
+<meta name="description"
+      content="Advocate Document Generation Hub - Search, filter and access legal document generators.">
+
+<style>
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --text: #172033;
+    --muted: #697386;
+    --border: #e3e7ee;
+    --primary: #173b72;
+    --primary-dark: #0f2850;
+    --accent: #c79a3b;
+    --danger: #d64545;
+    --shadow: 0 8px 25px rgba(20, 35, 60, 0.08);
+}
+
+body.dark {
+    --bg: #10151f;
+    --card: #171e2a;
+    --text: #f0f3f8;
+    --muted: #a8b0bd;
+    --border: #293342;
+    --primary: #5d8fd8;
+    --primary-dark: #4776b9;
+    --accent: #d7ad50;
+    --shadow: 0 8px 25px rgba(0,0,0,0.25);
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
+
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    transition: background 0.25s, color 0.25s;
+}
+
+button,
+input,
+select {
+    font: inherit;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+header {
+    background: linear-gradient(
+        135deg,
+        var(--primary-dark),
+        var(--primary)
+    );
+
+    color: white;
+    padding: 18px 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+}
+
+.navbar {
+    max-width: 1400px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.logo {
+    width: 46px;
+    height: 46px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+
+    font-size: 24px;
+}
+
+.brand h1 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.brand p {
+    font-size: 12px;
+    opacity: 0.75;
+    margin-top: 2px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.header-btn {
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.1);
+    color: white;
+
+    padding: 9px 13px;
+    border-radius: 9px;
+
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.header-btn:hover {
+    background: rgba(255,255,255,0.2);
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero {
+    max-width: 1400px;
+    margin: 35px auto 20px;
+    padding: 0 5%;
+}
+
+.hero-box {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(23,59,114,0.98),
+            rgba(39,75,132,0.96)
+        );
+
+    color: white;
+
+    border-radius: 20px;
+
+    padding: 38px;
+
+    position: relative;
+    overflow: hidden;
+
+    box-shadow: var(--shadow);
+}
+
+.hero-box::after {
+    content: "⚖";
+
+    position: absolute;
+
+    right: 40px;
+    bottom: -30px;
+
+    font-size: 180px;
+
+    opacity: 0.07;
+}
+
+.hero h2 {
+    font-size: clamp(26px, 4vw, 40px);
+    margin-bottom: 10px;
+}
+
+.hero p {
+    max-width: 700px;
+    opacity: 0.82;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-area {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 5%;
+}
+
+.search-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 14px 17px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    box-shadow: var(--shadow);
+}
+
+.search-icon {
+    font-size: 20px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: var(--text);
+
+    width: 100%;
+    font-size: 16px;
+}
+
+.search-box input::placeholder {
+    color: var(--muted);
+}
+
+/* =========================================================
+   FILTERS
+========================================================= */
+
+.controls {
+    max-width: 1400px;
+    margin: 20px auto;
+
+    padding: 0 5%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.categories {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.category-btn {
+    border: 1px solid var(--border);
+
+    background: var(--card);
+    color: var(--text);
+
+    padding: 8px 13px;
+
+    border-radius: 30px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.category-btn:hover {
+    border-color: var(--primary);
+}
+
+.category-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+.sort-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sort-box select {
+    padding: 8px 11px;
+
+    border: 1px solid var(--border);
+
+    background: var(--card);
+    color: var(--text);
+
+    border-radius: 8px;
+
+    outline: none;
+}
+
+/* =========================================================
+   STATS
+========================================================= */
+
+.stats {
+    max-width: 1400px;
+    margin: 20px auto;
+
+    padding: 0 5%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 15px;
+}
+
+.stat {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 13px;
+
+    padding: 17px 20px;
+
+    box-shadow: var(--shadow);
+}
+
+.stat-number {
+    font-size: 25px;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.stat-label {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 3px;
+}
+
+/* =========================================================
+   DOCUMENT GRID
+========================================================= */
+
+.documents-section {
+    max-width: 1400px;
+
+    margin: 30px auto 60px;
+
+    padding: 0 5%;
+}
+
+.section-heading {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 18px;
+}
+
+.section-heading h3 {
+    font-size: 21px;
+}
+
+.result-count {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.document-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(280px, 1fr));
+
+    gap: 17px;
+}
+
+/* =========================================================
+   DOCUMENT CARD
+========================================================= */
+
+.document-card {
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    padding: 20px;
+
+    cursor: pointer;
+
+    position: relative;
+
+    min-height: 205px;
+
+    display: flex;
+    flex-direction: column;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s;
+
+    box-shadow: 0 3px 12px rgba(20,35,60,0.04);
+}
+
+.document-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow: var(--shadow);
+
+    border-color: var(--primary);
+}
+
+.card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.doc-icon {
+    width: 46px;
+    height: 46px;
+
+    border-radius: 11px;
+
+    background: rgba(23,59,114,0.1);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+}
+
+.favorite {
+    border: none;
+
+    background: transparent;
+
+    color: #a8afba;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    padding: 3px;
+}
+
+.favorite.active {
+    color: var(--accent);
+}
+
+.document-card h4 {
+    font-size: 17px;
+
+    margin-top: 15px;
+
+    line-height: 1.35;
+}
+
+.document-card p {
+    color: var(--muted);
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin-top: 7px;
+
+    flex-grow: 1;
+}
+
+.card-bottom {
+    margin-top: 16px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+}
+
+.tag {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    background: rgba(23,59,114,0.09);
+
+    color: var(--primary);
+
+    border-radius: 20px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.open-text {
+    color: var(--primary);
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty {
+    display: none;
+
+    background: var(--card);
+
+    border: 1px dashed var(--border);
+
+    border-radius: 15px;
+
+    padding: 50px 20px;
+
+    text-align: center;
+
+    color: var(--muted);
+}
+
+.empty-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background: var(--card);
+
+    border-top: 1px solid var(--border);
+
+    padding: 25px 5%;
+
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+footer strong {
+    color: var(--text);
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    header {
+        padding: 13px 4%;
+    }
+
+    .brand h1 {
+        font-size: 17px;
+    }
+
+    .brand p {
+        display: none;
+    }
+
+    .hero {
+        margin-top: 20px;
+        padding: 0 4%;
+    }
+
+    .hero-box {
+        padding: 25px;
+    }
+
+    .hero-box::after {
+        right: 10px;
+        font-size: 110px;
+    }
+
+    .search-area,
+    .controls,
+    .stats,
+    .documents-section {
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .document-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sort-box {
+        width: 100%;
+    }
+
+    .sort-box select {
+        width: 100%;
+    }
+
+    .header-actions .header-btn span {
+        display: none;
+    }
+}
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+.document-card {
+    animation: fadeUp 0.35s ease both;
+}
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+</style>
+</head>
+
+
+<body>
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header>
+
+    <div class="navbar">
+
+        <div class="logo-area">
+
+            <div class="logo">
+                ⚖
+            </div>
+
+            <div class="brand">
+
+                <h1>Advocate Document Hub</h1>
+
+                <p>
+                    Legal Document Generation System
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="header-actions">
+
+            <button
+                class="header-btn"
+                onclick="showFavorites()"
+                title="Favorites">
+
+                ⭐ <span>Favorites</span>
+
+            </button>
+
+            <button
+                class="header-btn"
+                onclick="toggleDarkMode()"
+                title="Dark Mode">
+
+                🌙
+
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
+<section class="hero">
+
+    <div class="hero-box">
+
+        <h2>
+            Your Legal Document Workspace
+        </h2>
+
+        <p>
+            Search, filter and quickly open the document generator
+            you need for your case. Keep all your frequently used
+            legal documents organized in one place.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     SEARCH
+======================================================= -->
+
+<section class="search-area">
+
+    <div class="search-box">
+
+        <span class="search-icon">
+            🔎
+        </span>
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search document... e.g. Caveat, Plaint, Affidavit, Appeal"
+            oninput="filterDocuments()"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     CATEGORY FILTER
+======================================================= -->
+
+<div class="controls">
+
+    <div
+        class="categories"
+        id="categoryButtons">
+    </div>
+
+
+    <div class="sort-box">
+
+        <label for="sortSelect">
+            Sort:
+        </label>
+
+        <select
+            id="sortSelect"
+            onchange="filterDocuments()">
+
+            <option value="name">
+                Name
+            </option>
+
+            <option value="category">
+                Category
+            </option>
+
+            <option value="favorites">
+                Favorites First
+            </option>
+
+        </select>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     STATISTICS
+======================================================= -->
+
+<section class="stats">
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="totalDocuments">
+            0
+        </div>
+
+        <div class="stat-label">
+            Total Documents
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="totalCategories">
+            0
+        </div>
+
+        <div class="stat-label">
+            Categories
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div
+            class="stat-number"
+            id="favoriteCount">
+            0
+        </div>
+
+        <div class="stat-label">
+            Favorites
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     DOCUMENTS
+======================================================= -->
+
+<section class="documents-section">
+
+    <div class="section-heading">
+
+        <h3>
+            Document Generators
+        </h3>
+
+        <span
+            class="result-count"
+            id="resultCount">
+            0 documents
+        </span>
+
+    </div>
+
+
+    <div
+        class="document-grid"
+        id="documentGrid">
+    </div>
+
+
+    <div
+        class="empty"
+        id="emptyState">
+
+        <div class="empty-icon">
+            🔍
+        </div>
+
+        <h3>
+            No documents found
+        </h3>
+
+        <p>
+            Try another search term or category.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
+<footer>
+
+    <strong>
+        Advocate Document Hub
+    </strong>
+
+    <br>
+
+    Legal document generation workspace
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   DOCUMENT DATABASE
+
+   ADD YOUR NEW DOCUMENTS HERE.
+
+   Example:
+
+   {
+       id: 21,
+       title: "My New Document",
+       description: "Description of document",
+       category: "Civil",
+       icon: "📄",
+       url: "https://yourusername.github.io/document-generator/"
+   }
+
+========================================================= */
+
+const documents = [
+
+    /* ---------------- CIVIL ---------------- */
+
+    {
+        id: 1,
+        title: "Plaint",
+        description: "Generate and prepare a civil plaint.",
+        category: "Civil",
+        icon: "📜",
+        url: "https://yourusername.github.io/plaint/"
+    },
+
+    {
+        id: 2,
+        title: "Written Statement",
+        description: "Prepare written statement for civil proceedings.",
+        category: "Civil",
+        icon: "📝",
+        url: "https://yourusername.github.io/written-statement/"
+    },
+
+    {
+        id: 3,
+        title: "Application Under Order 7 Rule 11 CPC",
+        description: "Draft application for rejection of plaint.",
+        category: "Civil",
+        icon: "⚖️",
+        url: "https://yourusername.github.io/order7rule11/"
+    },
+
+    {
+        id: 4,
+        title: "Temporary Injunction Application",
+        description: "Application under Order 39 Rule 1 & 2 CPC.",
+        category: "Civil",
+        icon: "🛡️",
+        url: "https://yourusername.github.io/injunction/"
+    },
+
+    {
+        id: 5,
+        title: "Order 39 Rule 7 Application",
+        description: "Application for inspection, preservation or related relief.",
+        category: "Civil",
+        icon: "📋",
+        url: "https://yourusername.github.io/order39rule7/"
+    },
+
+
+    /* ---------------- CRIMINAL ---------------- */
+
+    {
+        id: 6,
+        title: "Bail Application",
+        description: "Generate a regular bail application.",
+        category: "Criminal",
+        icon: "🔐",
+        url: "https://yourusername.github.io/bail/"
+    },
+
+    {
+        id: 7,
+        title: "Anticipatory Bail Application",
+        description: "Prepare anticipatory bail application.",
+        category: "Criminal",
+        icon: "🛡️",
+        url: "https://yourusername.github.io/anticipatory-bail/"
+    },
+
+    {
+        id: 8,
+        title: "Criminal Revision",
+        description: "Prepare criminal revision petition.",
+        category: "Criminal",
+        icon: "⚖️",
+        url: "https://yourusername.github.io/criminal-revision/"
+    },
+
+
+    /* ---------------- REVENUE ---------------- */
+
+    {
+        id: 9,
+        title: "RTS Appeal",
+        description: "Prepare Revenue / RTS appeal.",
+        category: "Revenue",
+        icon: "🏛️",
+        url: "https://yourusername.github.io/rts-appeal/"
+    },
+
+    {
+        id: 10,
+        title: "Revenue Application",
+        description: "Generate application for revenue proceedings.",
+        category: "Revenue",
+        icon: "📑",
+        url: "https://yourusername.github.io/revenue-application/"
+    },
+
+    {
+        id: 11,
+        title: "Road Case Application",
+        description: "Prepare application relating to right of way proceedings.",
+        category: "Revenue",
+        icon: "🛣️",
+        url: "https://yourusername.github.io/road-case/"
+    },
+
+
+    /* ---------------- HIGH COURT ---------------- */
+
+    {
+        id: 12,
+        title: "Writ Petition",
+        description: "Prepare basic writ petition document.",
+        category: "High Court",
+        icon: "🏛️",
+        url: "https://yourusername.github.io/writ-petition/"
+    },
+
+    {
+        id: 13,
+        title: "Certified Copy Application",
+        description: "Application for obtaining certified copy.",
+        category: "High Court",
+        icon: "📄",
+        url: "https://yourusername.github.io/certified-copy/"
+    },
+
+
+    /* ---------------- APPLICATIONS ---------------- */
+
+    {
+        id: 14,
+        title: "Caveat Application",
+        description: "Prepare Caveat under Section 148A CPC.",
+        category: "Applications",
+        icon: "🔔",
+        url: "https://yourusername.github.io/caveat/"
+    },
+
+    {
+        id: 15,
+        title: "Production Application",
+        description: "Application for production of documents.",
+        category: "Applications",
+        icon: "📂",
+        url: "https://yourusername.github.io/production-application/"
+    },
+
+    {
+        id: 16,
+        title: "Adjournment Application",
+        description: "Generate an application seeking adjournment.",
+        category: "Applications",
+        icon: "📅",
+        url: "https://yourusername.github.io/adjournment/"
+    },
+
+
+    /* ---------------- AFFIDAVITS ---------------- */
+
+    {
+        id: 17,
+        title: "Affidavit",
+        description: "Prepare a general affidavit.",
+        category: "Affidavit",
+        icon: "✍️",
+        url: "https://yourusername.github.io/affidavit/"
+    },
+
+    {
+        id: 18,
+        title: "Evidence Affidavit",
+        description: "Prepare affidavit in lieu of examination-in-chief.",
+        category: "Affidavit",
+        icon: "📃",
+        url: "https://yourusername.github.io/evidence-affidavit/"
+    },
+
+
+    /* ---------------- MISCELLANEOUS ---------------- */
+
+    {
+        id: 19,
+        title: "Vakalatnama",
+        description: "Generate Vakalatnama document.",
+        category: "Miscellaneous",
+        icon: "✒️",
+        url: "https://yourusername.github.io/vakalatnama/"
+    },
+
+    {
+        id: 20,
+        title: "Legal Notice",
+        description: "Prepare a legal notice.",
+        category: "Miscellaneous",
+        icon: "📨",
+        url: "https://yourusername.github.io/legal-notice/"
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let selectedCategory = "All";
+let favoritesOnly = false;
+
+
+/* =========================================================
+   FAVORITES
+========================================================= */
+
+function getFavorites() {
+
+    return JSON.parse(
+        localStorage.getItem("advocateFavorites") || "[]"
+    );
+
+}
+
+
+function saveFavorites(favorites) {
+
+    localStorage.setItem(
+        "advocateFavorites",
+        JSON.stringify(favorites)
+    );
+
+}
+
+
+function isFavorite(id) {
+
+    return getFavorites().includes(id);
+
+}
+
+
+function toggleFavorite(event, id) {
+
+    event.stopPropagation();
+
+    let favorites = getFavorites();
+
+    if (favorites.includes(id)) {
+
+        favorites = favorites.filter(
+            item => item !== id
+        );
+
+    } else {
+
+        favorites.push(id);
+
+    }
+
+    saveFavorites(favorites);
+
+    renderDocuments();
+
+}
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+function createCategories() {
+
+    const container =
+        document.getElementById("categoryButtons");
+
+    const categories = [
+        "All",
+        ...new Set(
+            documents.map(
+                document => document.category
+            )
+        )
+    ];
+
+    container.innerHTML = "";
+
+    categories.forEach(category => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "category-btn";
+
+        if (category === selectedCategory) {
+            button.classList.add("active");
+        }
+
+        button.textContent =
+            category;
+
+        button.onclick = () => {
+
+            selectedCategory =
+                category;
+
+            favoritesOnly = false;
+
+            createCategories();
+
+            filterDocuments();
+
+        };
+
+        container.appendChild(button);
+
+    });
+
+}
+
+
+/* =========================================================
+   SEARCH + FILTER
+========================================================= */
+
+function filterDocuments() {
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    let results =
+        documents.filter(document => {
+
+            const matchesSearch =
+                document.title
+                .toLowerCase()
+                .includes(search)
+
+                ||
+
+                document.description
+                .toLowerCase()
+                .includes(search)
+
+                ||
+
+                document.category
+                .toLowerCase()
+                .includes(search);
+
+
+            const matchesCategory =
+                selectedCategory === "All"
+                ||
+                document.category === selectedCategory;
+
+
+            const matchesFavorites =
+                !favoritesOnly
+                ||
+                isFavorite(document.id);
+
+
+            return (
+                matchesSearch &&
+                matchesCategory &&
+                matchesFavorites
+            );
+
+        });
+
+
+    /* SORT */
+
+    const sort =
+        document
+        .getElementById("sortSelect")
+        .value;
+
+
+    if (sort === "name") {
+
+        results.sort(
+            (a,b) =>
+                a.title.localeCompare(b.title)
+        );
+
+    }
+
+    if (sort === "category") {
+
+        results.sort(
+            (a,b) =>
+                a.category.localeCompare(b.category)
+        );
+
+    }
+
+    if (sort === "favorites") {
+
+        results.sort(
+            (a,b) =>
+                Number(isFavorite(b.id))
+                -
+                Number(isFavorite(a.id))
+        );
+
+    }
+
+
+    renderDocuments(results);
+
+}
+
+
+/* =========================================================
+   RENDER DOCUMENTS
+========================================================= */
+
+function renderDocuments(results = null) {
+
+    if (results === null) {
+
+        results = documents.filter(document => {
+
+            if (selectedCategory === "All") {
+                return true;
+            }
+
+            return document.category === selectedCategory;
+
+        });
+
+    }
+
+
+    const grid =
+        document.getElementById("documentGrid");
+
+    const empty =
+        document.getElementById("emptyState");
+
+    grid.innerHTML = "";
+
+
+    if (results.length === 0) {
+
+        empty.style.display = "block";
+
+    } else {
+
+        empty.style.display = "none";
+
+    }
+
+
+    results.forEach((document, index) => {
+
+        const card =
+            document.createElement("div");
+
+        card.className =
+            "document-card";
+
+        card.style.animationDelay =
+            `${index * 0.03}s`;
+
+
+        card.onclick = () => {
+
+            window.open(
+                document.url,
+                "_blank"
+            );
+
+        };
+
+
+        const favorite =
+            isFavorite(document.id);
+
+
+        card.innerHTML = `
+
+            <div class="card-top">
+
+                <div class="doc-icon">
+                    ${document.icon}
+                </div>
+
+                <button
+                    class="favorite ${favorite ? "active" : ""}"
+                    onclick="toggleFavorite(event, ${document.id})"
+                    title="Add to favorites">
+
+                    ${favorite ? "★" : "☆"}
+
+                </button>
+
+            </div>
+
+
+            <h4>
+                ${document.title}
+            </h4>
+
+
+            <p>
+                ${document.description}
+            </p>
+
+
+            <div class="card-bottom">
+
+                <span class="tag">
+                    ${document.category}
+                </span>
+
+                <span class="open-text">
+                    Open ↗
+                </span>
+
+            </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    document
+        .getElementById("resultCount")
+        .textContent =
+        `${results.length} document${results.length !== 1 ? "s" : ""}`;
+
+
+    updateStats();
+
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+function updateStats() {
+
+    const favorites =
+        getFavorites();
+
+    const categories =
+        new Set(
+            documents.map(
+                document => document.category
+            )
+        );
+
+
+    document
+        .getElementById("totalDocuments")
+        .textContent =
+        documents.length;
+
+
+    document
+        .getElementById("totalCategories")
+        .textContent =
+        categories.size;
+
+
+    document
+        .getElementById("favoriteCount")
+        .textContent =
+        favorites.length;
+
+}
+
+
+/* =========================================================
+   FAVORITES MODE
+========================================================= */
+
+function showFavorites() {
+
+    favoritesOnly =
+        !favoritesOnly;
+
+    selectedCategory =
+        "All";
+
+    createCategories();
+
+    filterDocuments();
+
+}
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "advocateDarkMode",
+        document.body.classList.contains("dark")
+    );
+
+}
+
+
+/* =========================================================
+   LOAD SAVED DARK MODE
+========================================================= */
+
+if (
+    localStorage.getItem("advocateDarkMode")
+    === "true"
+) {
+
+    document.body.classList.add("dark");
+
+}
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+createCategories();
+
+filterDocuments();
+
+</script>
+
+</body>
+</html>
